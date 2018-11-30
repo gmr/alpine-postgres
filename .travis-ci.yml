@@ -1,0 +1,33 @@
+dist: xenial
+services:
+  - docker
+
+env:
+  global:
+    - DOCKER_USERNAME=gavinmroy
+    - secure: "KVTSDsuUK5fQOl1h33EyBRC19HjUQY7+/tJ7iZtWuyCW+LRn/sIbgldzzsuUFwco9kA4r/cvwoT4JiKXeoQPUa6Yuk26bAevEXzLIHqyg6ARrOxK65oxCYkv7s4jF+0fXuQINLRAjzgrtCkQYsZjiW+qlFgtkPxbMCkdzS2Ym9AJqi6xBAQu8GCRTRcE2tToKa7w1SRR26qKhTcvq34+tfQNN+5nm/cQiw56v0J0HZlvLAYRDKaxMz2YGl8vn2m0cQHEwP1mwtzmn/msJoLgq95v6h5PegKg2y8Onpq0QvrYiwhNrQ+18q3Wgbe8lfSTNphFZ7UgnTsWQdJQa5iiTnwKwxZIA20b+Jsl+9ZE+jNCLYfnwkgiybFPuwCnjGHDCskSoD2owNG3fPoDnmPoYXixZIi9Kd82lSmzTymBjJWa93opyqY2HohxeM/iGiZ1kILJCdboU0JboEkHUBnAS4qM1N1/XhXo96csmO45P8+Tq52aGMwfT+Im69R9Jl63scHaj5oMxWTYx6G1RCAaF0noOqku+4uhvJXvhYpn4VJJPB7jmH9DO8d0PKnqrFi7hXteD7L0KzRijyZAl6WobHZw97bXvPm/mCxFjCZ/TD4nYfipGyYwkbZ7vlmex7cyykicwrUfPy36UU+llSF7adRRTj2GUodJ8l3hz3kHkMM="
+
+stages:
+  - name: deploy latest
+    if: branch = master AND repo = 'gavinmroy/alpine-postgres'
+  - name: deploy tag
+    if: tag IS present AND repo = 'gavinmroy/alpine-postgres'
+
+before_script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+script: true
+
+jobs:
+  include:
+    - stage: deploy latest
+      script:
+        - docker build -t gavinmroy/alpine-postgres:latest
+      after_success:
+        - docker push gavinmroy/alpine-postgres:latest
+    - stage: deploy tag
+      script:
+        - docker build -t gavinmroy/alpine-postgres:latest
+      after_success:
+        - docker push gavinmroy/alpine-postgres:latest
+        - docker tag gavinmroy/alpine-postgres:latest gavinmroy/alpine-postgres:${TRAVIS_TAG}
+        - docker push gavinmroy/alpine-postgres:${TRAVIS_TAG}
