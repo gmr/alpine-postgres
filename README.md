@@ -10,13 +10,13 @@ Docker image with a small disk footprint for PostgreSQL that includes
 
 ## Image Tags
 
-- ``gavinmroy/postgres:latest`` reflects the state of master
-- ``gavinmroy/postgres:[PG_VERSION]-[RELEASE]`` reflects tagged releases
+- ``gavinmroy/alpine-postgres:latest`` reflects the state of master
+- ``gavinmroy/alpine-postgres:[PG_VERSION]-[RELEASE]`` reflects tagged releases
 
 ## Example Usage
 
 ```bash
-docker run --name postgres -d -p 5432:5432 gavinmroy/postgres:11.1-0
+docker run --name postgres -d -p 5432:5432 gavinmroy/alpine-postgres:11.1-0
 ```
 
 ## Startup DDL / SQL
@@ -33,6 +33,6 @@ Example usage:
 
 ```bash
 docker pull gavinmroy/postgres:11.1-0
-docker run -d --name pgsql-testing -v /path/to/tests:/tests -p 5432 gavinmroy/postgres:11.1-0
+docker run -d --name pgsql-testing -v /path/to/tests:/tests -p 5432 gavinmroy/alpine-postgres:11.1-0
 docker exec -t -i pgsql-testing pg_prove -v /tests/*.sql
 ```
