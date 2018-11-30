@@ -1,6 +1,6 @@
 # alpine-postgres
 
-Image with a small disk footprint for PostgreSQL that includes
+Docker image with a small disk footprint for PostgreSQL that includes
 [pgTap](http://pgtap.org), and [pgq](http://pgq.github.io).
 
 ## Image Tags
