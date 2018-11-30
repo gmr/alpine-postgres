@@ -1,6 +1,9 @@
 dist: xenial
+
 services:
   - docker
+
+language: python
 
 env:
   global:
@@ -9,24 +12,20 @@ env:
 
 stages:
   - name: deploy latest
-    if: branch = master AND repo = 'gavinmroy/alpine-postgres'
+    if: branch = master AND repo = gmr/alpine-postgres
   - name: deploy tag
-    if: tag IS present AND repo = 'gavinmroy/alpine-postgres'
+    if: tag IS present AND repo = gmr/alpine-postgres
 
 before_script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
 script: true
 
 jobs:
   include:
     - stage: deploy latest
-      script:
-        - docker build -t gavinmroy/alpine-postgres:latest
-      after_success:
-        - docker push gavinmroy/alpine-postgres:latest
+      script: docker build -t gavinmroy/alpine-postgres:latest .
+      after_success: docker push gavinmroy/alpine-postgres:latest
     - stage: deploy tag
-      script:
-        - docker build -t gavinmroy/alpine-postgres:latest
+      script: docker build -t gavinmroy/alpine-postgres:latest .
       after_success:
         - docker push gavinmroy/alpine-postgres:latest
         - docker tag gavinmroy/alpine-postgres:latest gavinmroy/alpine-postgres:${TRAVIS_TAG}
