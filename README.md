@@ -3,6 +3,10 @@
 Docker image with a small disk footprint for PostgreSQL that includes
 [pgTap](http://pgtap.org), and [pgq](http://pgq.github.io).
 
+[![Build Status](https://travis-ci.org/gmr/alpine-postgres.svg?branch=master)](https://travis-ci.org/gmr/alpine-postgres)
+![Docker Pulls](https://img.shields.io/docker/pulls/gavinmroy/alpine-postgres.svg)
+![Docker Stars](https://img.shields.io/docker/stars/gavinmroy/alpine-postgres.svg)
+
 ## Image Tags
 
 - ``gavinmroy/postgres:latest`` reflects the state of master
