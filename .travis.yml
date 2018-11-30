@@ -3,7 +3,7 @@ dist: xenial
 services:
   - docker
 
-language: python
+language: minimal
 
 env:
   global:
