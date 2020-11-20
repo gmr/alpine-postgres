@@ -38,9 +38,10 @@ if [ "$1" = 'postgres' ]; then
 	    sed -ri "s/^#(listen_addresses\s*=\s*)\S+/\1'*'/" "$PGDATA"/postgresql.conf
 
 	    # Add pg_stats_statements to the config for
-	    sed -ri "s/^#(shared_preload_libraries = '')\S+/\1 'pg_stat_statements'/" "$PGDATA"/postgresql.conf
+	    sed -ri "s/^#(shared_preload_libraries = '')\S+/\1 'pg_cron,pg_stat_statements'/" "$PGDATA"/postgresql.conf
 	    { echo; echo "pg_stat_statements.max = 10000"; } | tee -a "$PGDATA"/postgresql.conf > /dev/null
 	    { echo; echo "pg_stat_statements.track = all"; } | tee -a "$PGDATA"/postgresql.conf > /dev/null
+	    { echo; echo "cron.database_name = 'postgres'"; } | tee -a "$PGDATA"/postgresql.conf > /dev/null
 
 		# check password first so we can output the warning before postgres
 		# messes it up
@@ -106,6 +107,7 @@ if [ "$1" = 'postgres' ]; then
 				*.sh)     echo "$0: running $f"; . "$f" ;;
 				*.sql)    echo "$0: running $f"; "${psql[@]}" -f "$f"; echo ;;
 				*.sql.gz) echo "$0: running $f"; gunzip -c "$f" | "${psql[@]}"; echo ;;
+				*.conf)   echo "$0: including custom conf $f"; echo "include '$f'" | tee -a "$PGDATA"/postgresql.conf > /dev/null; echo ;;
 				*)        echo "$0: ignoring $f" ;;
 			esac
 			echo
