@@ -36,9 +36,10 @@ if [ "$1" = 'postgres' ]; then
 
 	    # Uncomment the listen_addresses setting
 	    sed -ri "s/^#(listen_addresses\s*=\s*)\S+/\1'*'/" "$PGDATA"/postgresql.conf
+		sed -ri "s/^#(listen_addresses\s*=\s*)\S+/\1'*'/" "$PGDATA"/postgresql.conf
 
 	    # Add pg_stats_statements to the config for
-	    sed -ri "s/^#(shared_preload_libraries = '')\S+/\1 'pg_cron,pg_stat_statements'/" "$PGDATA"/postgresql.conf
+	    sed -ri "s/^#(shared_preload_libraries = )''.*/\1 'pg_cron,pg_stat_statements'/" "$PGDATA"/postgresql.conf
 	    { echo; echo "pg_stat_statements.max = 10000"; } | tee -a "$PGDATA"/postgresql.conf > /dev/null
 	    { echo; echo "pg_stat_statements.track = all"; } | tee -a "$PGDATA"/postgresql.conf > /dev/null
 	    { echo; echo "cron.database_name = 'postgres'"; } | tee -a "$PGDATA"/postgresql.conf > /dev/null
