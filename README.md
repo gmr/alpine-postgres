@@ -22,7 +22,7 @@ Docker image with a small disk footprint for PostgreSQL that includes:
 ## Example Usage
 
 ```bash
-docker run --name postgres -d -p 5432:5432 gavinmroy/alpine-postgres:13.2-0-0
+docker run --name postgres -d -p 5432:5432 gavinmroy/alpine-postgres:13.3-0-0
 ```
 
 ## Startup DDL / SQL
@@ -38,7 +38,7 @@ To run pgTap tests you must mount your test directory to the container.
 Example usage:
 
 ```bash
-docker pull gavinmroy/postgres:13.2-0-0
-docker run -d --name pgsql-testing -v /path/to/tests:/tests -p 5432 gavinmroy/alpine-postgres:13.2-0-0
+docker pull gavinmroy/postgres:13.3-0-0
+docker run -d --name pgsql-testing -v /path/to/tests:/tests -p 5432 gavinmroy/alpine-postgres:13.3-0-0
 docker exec -t -i pgsql-testing pg_prove -v /tests/*.sql
 ```
