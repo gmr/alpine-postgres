@@ -14,8 +14,8 @@ ENV LANG=en_US.utf8 \
     PGDATA=/var/lib/postgresql/data
 
 RUN apk update \
- && apk add --no-cache bash ca-certificates cyrus-sasl icu-libs libedit libffi libintl libressl llvm10 perl python3 tzdata \
- && apk add --no-cache --virtual devdeps asciidoc autoconf automake bison bzip2 clang cmake coreutils curl cyrus-sasl-dev expat-dev flex curl gcc g++ gdbm gettext-dev git icu-dev libc-dev libedit-dev libffi-dev libressl-dev libtool libxml2-dev libxslt-dev linux-headers llvm10-dev make musl-dev patch perl-dev python3-dev unzip util-linux-dev xmlto zlib-dev \
+ && apk add --no-cache bash ca-certificates cyrus-sasl icu-libs libedit libffi libintl llvm10 openssl perl python3 tzdata \
+ && apk add --no-cache --virtual devdeps asciidoc autoconf automake bison bzip2 clang cmake coreutils curl cyrus-sasl-dev expat-dev flex curl gcc g++ gdbm gettext-dev git icu-dev libc-dev libedit-dev libffi-dev libtool libxml2-dev libxslt-dev linux-headers llvm10-dev make musl-dev openssl-dev patch perl-dev python3-dev unzip util-linux-dev xmlto zlib-dev \
  && git config --global user.email "${GITLAB_USER_EMAIL:-gavinmroy@gmail.com}" \
  && git config --global user.name "${GITLAB_USER_NAME:-Docker}" \
  && curl https://bootstrap.pypa.io/get-pip.py | python3 \
